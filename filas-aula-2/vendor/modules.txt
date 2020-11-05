@@ -1,0 +1,11 @@
+# github.com/joho/godotenv v1.3.0
+## explicit
+github.com/joho/godotenv
+# github.com/satori/go.uuid v1.2.0
+## explicit
+github.com/satori/go.uuid
+# github.com/streadway/amqp v1.0.0
+github.com/streadway/amqp
+# github.com/wesleywillians/go-rabbitmq v0.0.0-20201027193450-55e6a80937af
+## explicit
+github.com/wesleywillians/go-rabbitmq/queue
