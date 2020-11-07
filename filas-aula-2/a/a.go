@@ -2,18 +2,21 @@ package main
 
 import (
 	"encoding/json"
-	"github.com/joho/godotenv"
-	"github.com/wesleywillians/go-rabbitmq/queue"
 	"html/template"
 	"log"
 	"net/http"
+
+	"github.com/joho/godotenv"
+	"github.com/wesleywillians/go-rabbitmq/queue"
 )
 
+// Order is the service order
 type Order struct {
 	Coupon   string
 	CcNumber string
 }
 
+// Result is the result for the requests
 type Result struct {
 	Status string
 }
@@ -53,9 +56,10 @@ func process(w http.ResponseWriter, r *http.Request) {
 
 	rabbitMQ := queue.NewRabbitMQ()
 	ch := rabbitMQ.Connect()
-	defer ch.Close()
+	defer ch.Close() // defer é semelhante ao finally
 
 	err = rabbitMQ.Notify(string(jsonOrder), "application/json", "orders_ex", "")
+
 	if err != nil {
 		log.Fatal("Error sending message to the queue")
 	}

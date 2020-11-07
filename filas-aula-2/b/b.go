@@ -2,24 +2,26 @@ package main
 
 import (
 	"encoding/json"
-	"github.com/joho/godotenv"
-	uuid "github.com/satori/go.uuid"
-	"github.com/streadway/amqp"
-	"github.com/wesleywillians/go-rabbitmq/queue"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"net/url"
-)
 
-type Result struct {
-	Status string
-}
+	"github.com/joho/godotenv"
+	uuid "github.com/satori/go.uuid"
+	"github.com/streadway/amqp"
+	"github.com/wesleywillians/go-rabbitmq/queue"
+)
 
 type Order struct {
 	ID       uuid.UUID
 	Coupon   string
 	CcNumber string
+}
+
+// Result is the status result
+type Result struct {
+	Status string
 }
 
 func NewOrder() Order {
@@ -35,7 +37,7 @@ const (
 func init() {
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatalf("Error loading .env file")
+		log.Fatal("Error loading .env")
 	}
 }
 
@@ -69,7 +71,7 @@ func process(msg amqp.Delivery) {
 		log.Println("Order: ", order.ID, ": could not process!")
 
 	case ValidCoupon:
-		log.Println("Order: ", order.ID, ": Processed")
+		log.Println("Order: ", order.ID, ": Processed!")
 	}
 }
 
